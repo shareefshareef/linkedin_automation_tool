@@ -1,3 +1,38 @@
+# LinkedIn Automation Script
+
+This script uses Selenium to automate interactions with LinkedIn, such as logging in, updating your profile summary, posting tweets, and creating polls. It includes methods for handling these tasks while logging the process.
+
+## Features
+
+- **Login**: Automates the login process using email and password.
+- **Update Profile Summary**: Navigates to your profile and updates the summary section.
+- **Post Tweet**: Allows you to post tweets to your LinkedIn feed.
+- **Post Poll**: Enables the creation of polls with multiple options.
+
+## Usage
+
+### Initialization
+
+To start using the script, instantiate the `Alinkedin` class with your LinkedIn credentials:
+
+```python
+linkedin_bot = Alinkedin(email="your_email", password="your_password")
+```
+### Logging In
+
+The `login` method is called automatically by other methods if the `login` parameter is set to `True`. Once you log in, you don't need to log in again for subsequent calls within the same session.
+
+### Method Summaries
+
+- **`login()`**: Logs into LinkedIn using the provided credentials.
+- **`update_summary(summary_text, summary_link, login=True)`**: Updates your LinkedIn summary. Call with `login=True` to log in first.
+- **`post_tweet(url, post="hello .", login=True)`**: Posts a tweet to your LinkedIn feed.
+- **`post_poll(url, poll, login=True)`**: Creates a poll with the specified options.
+- **`quit_driver()`**: Closes the browser session.
+
+### Important Note
+
+If you call a method with `login=True`, you will be logged in. For subsequent method calls, set `login=False` only if you want to skip logging in again. If you set it to `True`, the script will attempt to log in again, which may lead to errors if already logged in.
 
 # Learn About Task Scheduler
 
@@ -71,7 +106,26 @@ Before running the `main.py` script, you need to set up a couple of URLs specifi
 3. Copy the URL from your browser's address bar.
 4. Paste the copied URL into the main.py variable update_about_url.
 
-   ```python
-   update_about_url = "PASTE_YOUR_UPDATE_ABOUT_URL_HERE"
-   ```
+```python
+update_about_url = "PASTE_YOUR_UPDATE_ABOUT_URL_HERE"
+```
+```Example Usage
+# Create an instance
+linkedin_bot = Alinkedin(email="your_email", password="your_password")
 
+# Log in and update summary
+linkedin_bot.update_summary("New summary text", "https://www.linkedin.com/in/yourprofile", login=True)
+
+# Post a tweet
+linkedin_bot.post_tweet("https://www.linkedin.com/feed/", "Check out my latest update!")
+
+# Post a poll
+poll_data = {
+    'question': "What's your favorite programming language?",
+    'options': ["Python", "JavaScript", "C++", "Java"]
+}
+linkedin_bot.post_poll("https://www.linkedin.com/feed/", poll_data)
+
+# Quit the browser
+linkedin_bot.quit_driver()
+```
